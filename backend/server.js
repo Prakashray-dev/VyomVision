@@ -5,6 +5,9 @@ import cors from "cors";
 
 import adminRoutes from "./routes/admin.routes.js";
 import employeeRoutes from "./routes/employee.routes.js";
+import attendanceRoutes from "./routes/attendance.routes.js";
+
+
 dotenv.config();
 
 const app = express();
@@ -17,6 +20,7 @@ app.use("/api/admin", adminRoutes);
 
 app.use("/api/employees", employeeRoutes);
 
+app.use("/api/attendance", attendanceRoutes);
 
 app.get("/", (req, res) => {
   res.send("VyomVision HRMS Backend is running 🚀");
