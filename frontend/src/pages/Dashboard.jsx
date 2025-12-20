@@ -11,6 +11,13 @@ function Dashboard() {
   return (
     <div>
       <h2>Admin Dashboard</h2>
+
+      <button onClick={() => navigate("/employees")}>
+        View Employees
+      </button>
+
+      <br /><br />
+
       <button onClick={logout}>Logout</button>
     </div>
   );
