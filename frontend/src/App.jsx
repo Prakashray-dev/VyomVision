@@ -6,6 +6,7 @@ import Employees from "./pages/Employees";
 
 import AddEmployee from "./pages/AddEmployee";
 import Attendance from "./pages/Attendance";
+import AttendanceHistory from "./pages/AttendanceHistory";
 
 function App() {
   return (
@@ -49,7 +50,15 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+
+        <Route
+          path="/attendance-history"
+          element={
+            <ProtectedRoute>
+              <AttendanceHistory />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
