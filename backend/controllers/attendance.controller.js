@@ -6,39 +6,31 @@ import Employee from "../models/Employee.js";
  * @route POST /api/attendance/check-in
  * @access Admin
  */
-export const checkIn = async (req, res) => {
+
+export const markAttendance = async (req, res) => {
   try {
-    const { employeeId } = req.body;
+    const { employeeId, date, status } = req.body;
 
-    const employee = await Employee.findById(employeeId);
-
-    if (!employee || !employee.isActive) {
-      return res.status(404).json({ message: "Employee not found" });
+    if (!employeeId || !date || !status) {
+      return res.status(400).json({
+        message: "All fields are required",
+      });
     }
 
-    const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+    await Attendance.findOneAndUpdate(
+      { employee: employeeId, date },
+      { status },
+      { upsert: true, new: true }
+    );
 
-    const existingAttendance = await Attendance.findOne({
-      employee: employeeId,
-      date: today,
-    });
-
-    if (existingAttendance) {
-      return res.status(400).json({ message: "Already checked in today" });
-    }
-
-    const attendance = await Attendance.create({
-      employee: employeeId,
-      date: today,
-      checkIn: new Date(),
-    });
-
-    res.status(201).json({
-      message: "Check-in successful",
-      attendance,
+    res.status(200).json({
+      message: "Attendance saved",
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Attendance error:", error);
+    res.status(500).json({
+      message: "Server error",
+    });
   }
 };
 

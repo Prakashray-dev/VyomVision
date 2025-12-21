@@ -19,6 +19,10 @@ function Dashboard() {
       <br /><br />
 
       <button onClick={logout}>Logout</button>
+
+       <button onClick={() => navigate("/attendance")}>
+          Attendance
+       </button>
     </div>
   );
 }

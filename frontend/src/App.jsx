@@ -5,6 +5,7 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import Employees from "./pages/Employees";
 
 import AddEmployee from "./pages/AddEmployee";
+import Attendance from "./pages/Attendance";
 
 function App() {
   return (
@@ -39,6 +40,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/attendance"
+          element={
+            <ProtectedRoute>
+              <Attendance />
+            </ProtectedRoute>
+          }
+        />
+        
       </Routes>
     </BrowserRouter>
   );
