@@ -17,13 +17,11 @@ export const addEmployee = async (req, res) => {
       dateOfJoining,
     } = req.body;
 
-    // Check existing employee
     const existingEmployee = await Employee.findOne({ email });
     if (existingEmployee) {
       return res.status(400).json({ message: "Employee already exists" });
     }
 
-    // Generate Employee ID
     const count = await Employee.countDocuments();
     const employeeId = `EMP${String(count + 1).padStart(3, "0")}`;
 
@@ -48,11 +46,6 @@ export const addEmployee = async (req, res) => {
 };
 
 
-
-
-
-
-
 export const getAllEmployees = async (req, res) => {
   try {
     const page = Number(req.query.page) || 1;
@@ -64,6 +57,7 @@ export const getAllEmployees = async (req, res) => {
       .limit(limit)
       .sort({ createdAt: -1 });
 
+  
     const total = await Employee.countDocuments({ isActive: true });
 
     res.status(200).json({
@@ -77,12 +71,10 @@ export const getAllEmployees = async (req, res) => {
   }
 };
 
-
-
-
 export const getEmployeeById = async (req, res) => {
   try {
     const employee = await Employee.findById(req.params.id);
+
 
     if (!employee || !employee.isActive) {
       return res.status(404).json({ message: "Employee not found" });
@@ -93,8 +85,6 @@ export const getEmployeeById = async (req, res) => {
     res.status(500).json({ message: "Invalid employee ID" });
   }
 };
-
-
 
 
 export const updateEmployee = async (req, res) => {
@@ -118,18 +108,23 @@ export const updateEmployee = async (req, res) => {
   }
 };
 
-
-
-
-
+/**
+ * Soft delete employee (Deactivate)
+ * Employee is NOT deleted from DB
+ */
 export const deactivateEmployee = async (req, res) => {
   try {
-    const employee = await Employee.findById(req.params.id);
+    const { id } = req.params;
 
-    if (!employee || !employee.isActive) {
-      return res.status(404).json({ message: "Employee not found or already inactive" });
+    const employee = await Employee.findById(id);
+
+    if (!employee) {
+      return res.status(404).json({
+        message: "Employee not found",
+      });
     }
 
+    // SOFT DELETE
     employee.isActive = false;
     await employee.save();
 
@@ -137,6 +132,8 @@ export const deactivateEmployee = async (req, res) => {
       message: "Employee deactivated successfully",
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      message: "Server error",
+    });
   }
 };

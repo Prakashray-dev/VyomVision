@@ -18,5 +18,7 @@ router.get("/:id", protect, getEmployeeById);
 router.put("/:id", protect, updateEmployee);
 router.patch("/:id/deactivate", protect, deactivateEmployee);
 
+router.patch("/:id/deactivate", protect, deactivateEmployee);
+
 
 export default router;

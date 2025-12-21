@@ -7,6 +7,7 @@ import Employees from "./pages/Employees";
 import AddEmployee from "./pages/AddEmployee";
 import Attendance from "./pages/Attendance";
 import AttendanceHistory from "./pages/AttendanceHistory";
+import Payroll from "./pages/Payroll";
 
 function App() {
   return (
@@ -56,6 +57,15 @@ function App() {
           element={
             <ProtectedRoute>
               <AttendanceHistory />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/payroll"
+          element={
+            <ProtectedRoute>
+              <Payroll />
             </ProtectedRoute>
           }
         />

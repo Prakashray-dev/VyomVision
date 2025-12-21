@@ -9,6 +9,29 @@ function Employees() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+
+  const deactivateEmployee = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    await axios.patch(
+      `/employees/${id}/deactivate`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setEmployees((prev) =>
+      prev.filter((emp) => emp._id !== id)
+    );
+  } catch (error) {
+    alert("Failed to deactivate employee");
+  }
+};
+
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -54,6 +77,7 @@ function Employees() {
               <th>Full Name</th>
               <th>Employee ID</th>
               <th>Email</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -62,6 +86,11 @@ function Employees() {
                 <td>{emp.fullName}</td>
                 <td>{emp.employeeId}</td>
                 <td>{emp.email}</td>
+                <td>
+                  <button onClick={() => deactivateEmployee(emp._id)}>
+                    Deactivate
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

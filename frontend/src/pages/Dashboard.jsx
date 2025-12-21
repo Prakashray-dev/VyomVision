@@ -52,6 +52,12 @@ function Dashboard() {
 
       <br /><br />
 
+      <button onClick={() => navigate("/payroll")}>
+        Payroll
+      </button>
+
+        <br /><br />
+
       <button onClick={logout}>Logout</button>
     </div>
   );
