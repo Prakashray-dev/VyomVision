@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
+import AdminLayout from "../layout/AdminLayout";
 
 function Employees() {
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ function Employees() {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
+    <AdminLayout>
     <div style={{ padding: "20px" }}>
       <h2>Employees</h2>
 
@@ -97,6 +99,7 @@ function Employees() {
         </table>
       )}
     </div>
+    </AdminLayout>
   );
 }
 

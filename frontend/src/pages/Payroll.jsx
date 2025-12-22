@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "../api/axios";
+import AdminLayout from "../layout/AdminLayout";
 
 function Payroll() {
   const [month, setMonth] = useState("");
@@ -32,6 +33,7 @@ function Payroll() {
   };
 
   return (
+    <AdminLayout>
     <div style={{ padding: "20px" }}>
       <h2>Payroll</h2>
 
@@ -77,6 +79,7 @@ function Payroll() {
         </table>
       )}
     </div>
+    </AdminLayout>
   );
 }
 

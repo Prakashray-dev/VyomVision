@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
+import AdminLayout from "../layout/AdminLayout"; 
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -28,38 +29,42 @@ function Dashboard() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Admin Dashboard</h2>
+    <AdminLayout> 
+      <div style={{ padding: "20px" }}>
+        <h2>Admin Dashboard</h2>
 
-      {stats && (
-        <>
-          <p><b>Date:</b> {stats.date}</p>
-          <p><b>Total Employees:</b> {stats.totalEmployees}</p>
-          <p><b>Present Today:</b> {stats.present}</p>
-          <p><b>Absent Today:</b> {stats.absent}</p>
-        </>
-      )}
+        {stats && (
+          <>
+            <p><b>Date:</b> {stats.date}</p>
+            <p><b>Total Employees:</b> {stats.totalEmployees}</p>
+            <p><b>Present Today:</b> {stats.present}</p>
+            <p><b>Absent Today:</b> {stats.absent}</p>
+          </>
+        )}
 
-      <br />
+        <br />
 
-      <button onClick={() => navigate("/employees")}>Employees</button>
-      <br /><br />
-      <button onClick={() => navigate("/attendance")}>Attendance</button>
-      <br /><br />
-      <button onClick={() => navigate("/attendance-history")}>
-        Attendance History
-      </button>
+        <button onClick={() => navigate("/employees")}>Employees</button>
+        <br /><br />
 
-      <br /><br />
+        <button onClick={() => navigate("/attendance")}>Attendance</button>
+        <br /><br />
 
-      <button onClick={() => navigate("/payroll")}>
-        Payroll
-      </button>
+        <button onClick={() => navigate("/attendance-history")}>
+          Attendance History
+        </button>
 
         <br /><br />
 
-      <button onClick={logout}>Logout</button>
-    </div>
+        <button onClick={() => navigate("/payroll")}>
+          Payroll
+        </button>
+
+        <br /><br />
+
+        <button onClick={logout}>Logout</button>
+      </div>
+    </AdminLayout> 
   );
 }
 

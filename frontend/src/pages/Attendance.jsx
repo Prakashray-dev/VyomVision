@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "../api/axios";
+import AdminLayout from "../layout/AdminLayout";
 
 function Attendance() {
   const [employees, setEmployees] = useState([]);
@@ -74,6 +75,7 @@ catch (err) {
 
 
   return (
+    <AdminLayout>
     <div style={{ padding: "20px" }}>
       <h2>Mark Attendance</h2>
 
@@ -124,6 +126,7 @@ catch (err) {
         Submit Attendance
       </button>
     </div>
+    </AdminLayout>
   );
 }
 

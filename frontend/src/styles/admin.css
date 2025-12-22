@@ -1,0 +1,25 @@
+:root {
+  --primary-green: #1DB954;
+  --dark-green: #0B6E3B;
+  --light-green: #E8F7EE;
+  --bg-light: #F9FAFB;
+  --text-dark: #1F2937;
+  --card-bg: #FFFFFF;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-light);
+}
+
+.admin-layout {
+  display: flex;
+  height: 100vh;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}

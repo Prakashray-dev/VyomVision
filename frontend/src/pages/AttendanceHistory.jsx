@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "../api/axios";
+import AdminLayout from "../layout/AdminLayout";
 
 function AttendanceHistory() {
   const [date, setDate] = useState("");
@@ -32,6 +33,7 @@ function AttendanceHistory() {
   };
 
   return (
+    <AdminLayout>
     <div style={{ padding: "20px" }}>
       <h2>Attendance History</h2>
 
@@ -69,6 +71,7 @@ function AttendanceHistory() {
         </table>
       )}
     </div>
+    </AdminLayout>
   );
 }
 
