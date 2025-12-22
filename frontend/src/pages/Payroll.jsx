@@ -46,7 +46,7 @@ function Payroll() {
         />
       </label>
 
-      <button onClick={fetchPayroll} style={{ marginLeft: "10px" }}>
+      <button className="btn" onClick={fetchPayroll} style={{ marginLeft: "10px" }}>
         View Payroll
       </button>
 
@@ -55,7 +55,7 @@ function Payroll() {
       {message && <p>{message}</p>}
 
       {payroll.length > 0 && (
-        <table border="1" cellPadding="8">
+        <table className="table">
           <thead>
             <tr>
               <th>Employee</th>

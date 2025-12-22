@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
-import AdminLayout from "../layout/AdminLayout"; 
+import AdminLayout from "../layout/AdminLayout";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -29,42 +29,67 @@ function Dashboard() {
   };
 
   return (
-    <AdminLayout> 
+    <AdminLayout>
       <div style={{ padding: "20px" }}>
         <h2>Admin Dashboard</h2>
 
         {stats && (
-          <>
-            <p><b>Date:</b> {stats.date}</p>
-            <p><b>Total Employees:</b> {stats.totalEmployees}</p>
-            <p><b>Present Today:</b> {stats.present}</p>
-            <p><b>Absent Today:</b> {stats.absent}</p>
-          </>
+          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+            <div className="card">
+              <div className="card-title">Date</div>
+              <div className="card-value">{stats.date}</div>
+            </div>
+
+            <div className="card">
+              <div className="card-title">Total Employees</div>
+              <div className="card-value">{stats.totalEmployees}</div>
+            </div>
+
+            <div className="card">
+              <div className="card-title">Present Today</div>
+              <div className="card-value green">{stats.present}</div>
+            </div>
+
+            <div className="card">
+              <div className="card-title">Absent Today</div>
+              <div className="card-value red">{stats.absent}</div>
+            </div>
+          </div>
         )}
 
         <br />
 
-        <button onClick={() => navigate("/employees")}>Employees</button>
-        <br /><br />
+        {/* <button className="btn" onClick={() => navigate("/employees")}>
+          Employees
+        </button>
+        <br />
+        <br />
 
-        <button onClick={() => navigate("/attendance")}>Attendance</button>
-        <br /><br />
+        <button className="btn" onClick={() => navigate("/attendance")}>
+          Attendance
+        </button>
+        <br />
+        <br />
 
-        <button onClick={() => navigate("/attendance-history")}>
+        <button className="btn" onClick={() => navigate("/attendance-history")}>
           Attendance History
         </button>
 
-        <br /><br />
+        <br />
+        <br />
 
-        <button onClick={() => navigate("/payroll")}>
+        <button className="btn" onClick={() => navigate("/payroll")}>
           Payroll
         </button>
 
-        <br /><br />
+        <br />
+        <br />
 
-        <button onClick={logout}>Logout</button>
+        <button className="btn" onClick={logout}>
+          Logout
+        </button> */}
       </div>
-    </AdminLayout> 
+    </AdminLayout>
   );
 }
 

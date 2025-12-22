@@ -17,6 +17,7 @@ function Sidebar() {
         <Link to="/employees" style={linkStyle}>Employees</Link>
         <Link to="/attendance" style={linkStyle}>Attendance</Link>
         <Link to="/payroll" style={linkStyle}>Payroll</Link>
+        <Link to="/attendance-history" style={linkStyle}>Attendance History</Link>
       </nav>
     </div>
   );

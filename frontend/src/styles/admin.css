@@ -23,3 +23,170 @@ body {
   padding: 20px;
   overflow-y: auto;
 }
+
+/* ------- BUTTONS(GLOBAL-----*/
+.btn {
+  background-color: var(--primary-green);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+  background-color: var(--dark-green);
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary-green);
+  border: 2px solid var(--primary-green);
+}
+
+.btn-outline:hover {
+  background: var(--light-green);
+}
+
+
+
+
+/* ------ DASHBOARD CARDS ------- */
+.card {
+  background: var(--card-bg);
+  padding: 18px 22px;
+  border-radius: 14px;
+  min-width: 200px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.card-title {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.card-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.card-value.green {
+  color: var(--primary-green);
+}
+
+.card-value.red {
+  color: #dc2626;
+}
+
+
+
+/* -------- TABLES (GLOBAL) -------- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.table thead {
+  background-color: var(--light-green);
+}
+
+.table th {
+  text-align: left;
+  padding: 14px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.table td {
+  padding: 14px 16px;
+  border-top: 1px solid var(--border-light);
+  font-size: 14px;
+}
+
+.table tbody tr:hover {
+  background-color: #f3f4f6;
+}
+
+
+
+
+/*  FORM STYLES (GLOBAL) */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.form-grid input,
+.form-grid select {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-grid input:focus,
+.form-grid select:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 2px rgba(29, 185, 84, 0.15);
+}
+
+.form-grid input::placeholder {
+  color: #9ca3af;
+}
+
+.form-grid button {
+  grid-column: span 2;
+  margin-top: 10px;
+}
+
+
+/*  ADD / EDIT EMPLOYEE CARD  */
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: var(--text-dark);
+}
+
+.card {
+  max-width: 700px;
+}
+
+
+.error-text {
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.success-text {
+  color: #065f46;
+  background: #d1fae5;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}

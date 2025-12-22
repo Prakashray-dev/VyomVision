@@ -42,7 +42,7 @@ function AttendanceHistory() {
         onChange={(e) => setDate(e.target.value)}
       />
 
-      <button onClick={fetchHistory}>
+      <button className="btn" onClick={fetchHistory}>
         View Attendance
       </button>
 
@@ -51,7 +51,7 @@ function AttendanceHistory() {
       {message && <p>{message}</p>}
 
       {records.length > 0 && (
-        <table border="1" cellPadding="8">
+        <table className="table">
           <thead>
             <tr>
               <th>Name</th>

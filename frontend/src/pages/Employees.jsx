@@ -64,7 +64,7 @@ function Employees() {
       <h2>Employees</h2>
 
       {/* ADD EMPLOYEE BUTTON */}
-      <button onClick={() => navigate("/employees/add")}>
+      <button className="btn" onClick={() => navigate("/employees/add")}>
         Add Employee
       </button>
 
@@ -73,7 +73,7 @@ function Employees() {
       {employees.length === 0 ? (
         <p>No employees found</p>
       ) : (
-        <table border="1" cellPadding="8">
+        <table className="table">
           <thead>
             <tr>
               <th>Full Name</th>
@@ -89,7 +89,7 @@ function Employees() {
                 <td>{emp.employeeId}</td>
                 <td>{emp.email}</td>
                 <td>
-                  <button onClick={() => deactivateEmployee(emp._id)}>
+                  <button className="btn" onClick={() => deactivateEmployee(emp._id)}>
                     Deactivate
                   </button>
                 </td>

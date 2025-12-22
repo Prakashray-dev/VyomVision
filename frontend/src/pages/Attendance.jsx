@@ -94,7 +94,7 @@ catch (err) {
       <br /><br />
 
       {/* EMPLOYEE LIST */}
-      <table border="1" cellPadding="8">
+      <table className="table">
         <thead>
           <tr>
             <th>Name</th>
@@ -122,7 +122,7 @@ catch (err) {
       <br />
 
       {/* SUBMIT BUTTON */}
-      <button onClick={submitAttendance}>
+      <button className="btn" onClick={submitAttendance}>
         Submit Attendance
       </button>
     </div>

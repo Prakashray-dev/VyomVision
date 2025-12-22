@@ -90,7 +90,7 @@ if (attendanceRecords.length === 0) {
   const result = employees.map((emp) => ({
     employeeId: emp.employeeId,
     fullName: emp.fullName,
-    status: "Present", // DEFAULT PRESENT
+    status: "Absent", // DEFAULT ABSENT
   }));
 
   return res.status(200).json({
@@ -127,17 +127,16 @@ res.status(200).json({
 };
 
 
-
 export const getDashboardStats = async (req, res) => {
   try {
     const today = new Date().toISOString().split("T")[0];
 
-    const totalEmployees = await Employee.countDocuments();
+    const totalEmployees = await Employee.countDocuments({ isActive: true });
 
     const attendanceRecords = await Attendance.find({ date: today });
 
-    let presentCount = totalEmployees;
-    let absentCount = 0;
+    let presentCount = 0;
+    let absentCount = totalEmployees;
 
     // If attendance is taken today
     if (attendanceRecords.length > 0) {
