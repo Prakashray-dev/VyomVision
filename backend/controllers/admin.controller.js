@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Admin from "../models/Admin.js";
-
+import crypto from "crypto"
 
 /**
  * @desc Register Admin (One time only)
@@ -86,6 +86,99 @@ export const loginAdmin = async (req, res) => {
     res.status(500).json({
       message: "Server error",
       error: error.message,
+    });
+  }
+};
+
+
+
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Find admin by email
+    const admin = await Admin.findOne({ email });
+
+    if (!admin) {
+      return res.status(404).json({
+        message: "Admin with this email does not exist",
+      });
+    }
+
+    // Generate reset token (raw)
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    // Hash token before saving to DB
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    // Save hashed token & expiry
+    admin.resetPasswordToken = hashedToken;
+    admin.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 minutes
+
+    await admin.save();
+
+
+    res.status(200).json({
+      message: "Password reset token generated",
+      resetToken, // TEMP: only for testing, REMOVE later
+    });
+  } catch (error) {
+    console.error("Forgot password error:", error);
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+};
+
+
+
+export const resetPassword = async (req, res) => {
+  try {
+    const { token, password } = req.body;
+
+    if (!token || !password) {
+      return res.status(400).json({
+        message: "Token and new password are required",
+      });
+    }
+
+    // Hash token to match DB
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(token)
+      .digest("hex");
+
+    const admin = await Admin.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
+
+    if (!admin) {
+      return res.status(400).json({
+        message: "Invalid or expired reset token",
+      });
+    }
+
+    //Hash new password
+    const salt = await bcrypt.genSalt(10);
+    admin.password = await bcrypt.hash(password, salt);
+
+    // Clear reset fields
+    admin.resetPasswordToken = undefined;
+    admin.resetPasswordExpire = undefined;
+
+    await admin.save();
+
+    res.status(200).json({
+      message: "Password reset successful",
+    });
+  } catch (error) {
+    console.error("Reset password error:", error);
+    res.status(500).json({
+      message: "Server error",
     });
   }
 };

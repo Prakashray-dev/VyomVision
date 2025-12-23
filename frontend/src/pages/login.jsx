@@ -55,6 +55,12 @@ function Login() {
           <button type="submit">Login</button>
         </form>
 
+        <p 
+        className="forgot-password"
+        onClick={() => navigate("/forgot-password")}>
+          Forgot password?
+
+        </p>
         <p className="footer-text">
           Connecting Talent with Opportunity, One Career at a Time.
         </p>

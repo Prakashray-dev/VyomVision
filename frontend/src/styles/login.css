@@ -68,6 +68,18 @@
   margin-bottom: 10px;
 }
 
+
+.forgot-password {
+  margin-top: 14px;
+  font-size: 14px;
+  color: #1DB954;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
 .footer-text {
   margin-top: 20px;
   font-size: 12px;

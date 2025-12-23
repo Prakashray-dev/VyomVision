@@ -2,6 +2,8 @@ import express from "express";
 import {
   registerAdmin,
   loginAdmin,
+  forgotPassword,
+  resetPassword
 } from "../controllers/admin.controller.js";
 import { protect } from "../middleware/auth.middleware.js";
 
@@ -17,5 +19,10 @@ router.get("/profile", protect, (req, res) => {
     admin: req.admin,
   });
 });
+
+router.post("/forgot-password", forgotPassword);
+
+router.post("/reset-password", resetPassword);
+
 
 export default router;

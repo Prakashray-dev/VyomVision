@@ -88,11 +88,22 @@ function Employees() {
                 <td>{emp.fullName}</td>
                 <td>{emp.employeeId}</td>
                 <td>{emp.email}</td>
-                <td>
-                  <button className="btn" onClick={() => deactivateEmployee(emp._id)}>
-                    Deactivate
-                  </button>
-                </td>
+              <td style={{ display: "flex", gap: "8px" }}>
+                <button
+                  className="btn btn-outline"
+                 onClick={() => navigate(`/employees/edit/${emp._id}`)}
+                >
+                   Edit
+               </button>
+
+                <button
+                   className="btn"
+                   onClick={() => deactivateEmployee(emp._id)}
+                >
+                   Deactivate
+                </button>
+              </td>
+
               </tr>
             ))}
           </tbody>
