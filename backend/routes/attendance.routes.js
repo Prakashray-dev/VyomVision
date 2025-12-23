@@ -4,6 +4,7 @@ import {
   getAttendanceStatus,
   getAttendanceByDate,
   getDashboardStats,
+  getEmployeeAttendanceSummary
 } from "../controllers/attendance.controller.js";
 import { protect } from "../middleware/auth.middleware.js";
 
@@ -14,4 +15,7 @@ router.get("/status", protect, getAttendanceStatus);
 
 router.get("/history", protect, getAttendanceByDate);
 router.get("/dashboard-stats", protect, getDashboardStats);
+
+router.get("/employee-summary", getEmployeeAttendanceSummary);
+
 export default router;

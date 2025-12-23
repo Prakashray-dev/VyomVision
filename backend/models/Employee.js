@@ -42,6 +42,10 @@ const employeeSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    exitDate: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true }
 );

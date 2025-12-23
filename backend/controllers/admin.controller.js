@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import Admin from "../models/Admin.js";
 import crypto from "crypto"
 
+import sendEmail from "../utils/sendEmail.js";
+
 /**
  * @desc Register Admin (One time only)
  * @route POST /api/admin/register
@@ -96,40 +98,47 @@ export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
 
-    // Find admin by email
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
     const admin = await Admin.findOne({ email });
 
     if (!admin) {
-      return res.status(404).json({
-        message: "Admin with this email does not exist",
-      });
+      return res.status(404).json({ message: "Admin not found" });
     }
 
-    // Generate reset token (raw)
-    const resetToken = crypto.randomBytes(32).toString("hex");
+    // Generate reset token
+    const resetToken = jwt.sign(
+      { id: admin._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "15m" }
+    );
 
-    // Hash token before saving to DB
-    const hashedToken = crypto
-      .createHash("sha256")
-      .update(resetToken)
-      .digest("hex");
+    // CLICKABLE RESET LINK
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
-    // Save hashed token & expiry
-    admin.resetPasswordToken = hashedToken;
-    admin.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 minutes
-
-    await admin.save();
-
+    //  Send Email
+    await sendEmail({
+      to: admin.email,
+      subject: "Reset your VyomVision HRMS password",
+      html: `
+        <h2>Password Reset Request</h2>
+        <p>You requested to reset your password.</p>
+        <p>Click the link below to reset it:</p>
+        <a href="${resetLink}" target="_blank">${resetLink}</a>
+        <p>This link will expire in 15 minutes.</p>
+        <br/>
+        <p>– VyomVision HRMS Team</p>
+      `,
+    });
 
     res.status(200).json({
-      message: "Password reset token generated",
-      resetToken, // TEMP: only for testing, REMOVE later
+      message: "Password reset link sent to your email",
     });
   } catch (error) {
     console.error("Forgot password error:", error);
-    res.status(500).json({
-      message: "Server error",
-    });
+    res.status(500).json({ message: "Server error" });
   }
 };
 

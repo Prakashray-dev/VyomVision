@@ -164,3 +164,59 @@ export const getDashboardStats = async (req, res) => {
     });
   }
 };
+
+
+
+
+export const getEmployeeAttendanceSummary = async (req, res) => {
+  try {
+    const { employeeId, month } = req.query; //month = YYYY-MM
+
+    if (!employeeId || !month) {
+      return res.status(400).json({
+        message: "employeeId and month are required",
+      });
+    }
+
+    const employee = await Employee.findOne({ employeeId });
+
+    if (!employee) {
+      return res.status(404).json({
+        message: "Employee not found",
+      });
+    }
+
+    // Month date range
+    const startDate = new Date(`${month}-01`);
+    const endDate = new Date(startDate);
+    endDate.setMonth(endDate.getMonth() + 1);
+
+    //Attendance records for employee in that month
+    const attendanceRecords = await Attendance.find({
+      employee: employee._id,
+      date: { $gte: startDate, $lt: endDate },
+    });
+
+    const totalWorkingDays = attendanceRecords.length;
+
+    const presentDays = attendanceRecords.filter(
+      (a) => a.status === "Present"
+    ).length;
+
+    const absentDays = totalWorkingDays - presentDays;
+
+    res.status(200).json({
+      employeeId: employee.employeeId,
+      fullName: employee.fullName,
+      month,
+      totalWorkingDays,
+      presentDays,
+      absentDays,
+    });
+  } catch (error) {
+    console.error("Employee attendance summary error:", error);
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+};
