@@ -32,36 +32,47 @@ export const calculatePayroll = async (req, res) => {
     // Find unique working dates (attendance taken days)
     const workingDates = [
       ...new Set(
-        attendanceRecords.map(
-          (a) => a.date.toISOString().split("T")[0]
+        attendanceRecords.map((a) =>
+          new Date(a.date).toISOString().split("T")[0]
         )
       ),
     ];
-
     const totalWorkingDays = workingDates.length;
 
     const payrollData = employees.map((emp) => {
-      let presentDays = 0;
+      // Attendance of this employee
+      const empAttendance = attendanceRecords.filter(
+        (a) => a.employee.toString() === emp._id.toString()
+      );
 
-      // 🔥 CORE FIX: loop over working days
-      workingDates.forEach((date) => {
-        const record = attendanceRecords.find(
-          (a) =>
-            a.employee.toString() === emp._id.toString() &&
-            a.date.toISOString().split("T")[0] === date
-        );
+      let absentDays = 0;
+      let hasFridayAbsent = false;
+      let hasMondayAbsent = false;
 
-        if (record && record.status === "Present") {
-          presentDays++;
+      empAttendance.forEach((record) => {
+        if (record.status === "Absent") {
+          absentDays++;
+
+          const day = new Date(record.date).getDay();
+          //Sunday = 0, Monday = 1, Friday = 5
+          if (day === 5) hasFridayAbsent = true;
+          if (day === 1) hasMondayAbsent = true;
         }
       });
 
-      const absentDays = totalWorkingDays - presentDays;
+      // Sandwich rule
+      let extraDeductionDays = 0;
+
+      if (hasFridayAbsent || hasMondayAbsent) {
+        extraDeductionDays = 2;
+      }
+
+      const totalDeductionDays = absentDays + extraDeductionDays;
 
       const perDaySalary =
         totalWorkingDays > 0 ? emp.salary / totalWorkingDays : 0;
 
-      const deduction = perDaySalary * absentDays;
+      const deduction = perDaySalary * totalDeductionDays;
       const finalSalary = emp.salary - deduction;
 
       return {
@@ -70,6 +81,8 @@ export const calculatePayroll = async (req, res) => {
         monthlySalary: emp.salary,
         totalWorkingDays,
         absentDays,
+        sandwichDays: extraDeductionDays,
+        totalDeductionDays,
         deduction: Math.round(deduction),
         finalSalary: Math.round(finalSalary),
       };
