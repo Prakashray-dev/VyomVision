@@ -191,3 +191,27 @@ export const resetPassword = async (req, res) => {
     });
   }
 };
+   
+
+
+// Temporary 
+
+export const resetAdminPassword = async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    admin.password = hashedPassword;
+
+    await admin.save();
+
+    res.json({ message: "Admin password reset successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
