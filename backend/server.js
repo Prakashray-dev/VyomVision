@@ -18,9 +18,12 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://vyom-vision.vercel.app/"
+      "vyomvision-frontend.vercel.app",
+"vyomvision-frontend-git-main-prakashray-devs-projects.vercel.app",
+"vyomvision-frontend-7h95weyyy-prakashray-devs-projects.vercel.app"
     ],
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
