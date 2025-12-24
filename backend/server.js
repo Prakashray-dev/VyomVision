@@ -8,24 +8,15 @@ import employeeRoutes from "./routes/employee.routes.js";
 import attendanceRoutes from "./routes/attendance.routes.js";
 import payrollRoutes from "./routes/payroll.routes.js";
 
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
 
 const app = express();
 
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "vyomvision-frontend.vercel.app",
-"vyomvision-frontend-git-main-prakashray-devs-projects.vercel.app",
-"vyomvision-frontend-7h95weyyy-prakashray-devs-projects.vercel.app"
-    ],
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app.use(cors());
 
 app.use(express.json());
 
@@ -37,11 +28,15 @@ app.use("/api/attendance", attendanceRoutes);
 
 app.use("/api/payroll", payrollRoutes);
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-app.get("/", (req, res) => {
-  res.send("VyomVision HRMS Backend is running 🚀");
+
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
-
 
 mongoose
   .connect(process.env.MONGO_URI)
