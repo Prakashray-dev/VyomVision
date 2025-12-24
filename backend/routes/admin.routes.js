@@ -3,8 +3,7 @@ import {
   registerAdmin,
   loginAdmin,
   forgotPassword,
-  resetPassword,
-  resetAdminPassword
+  resetPassword
 } from "../controllers/admin.controller.js";
 import { protect } from "../middleware/auth.middleware.js";
 
@@ -25,6 +24,5 @@ router.post("/forgot-password", forgotPassword);
 
 router.post("/reset-password", resetPassword);
 
-router.post("/reset-admin-password", resetAdminPassword);
 
 export default router;
